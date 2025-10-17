@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtConnect - Red Social para Creadores</title>
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #FF6584;
+            --accent: #36D1DC;
+            --dark: #2A2D3E;
+            --light: #F7F9FC;
+            --success: #4CAF50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5752d4;
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            padding: 80px 0;
+            min-height: 80vh;
+        }
+        
+        .hero-content {
+            flex: 1;
+            padding-right: 50px;
+        }
+        
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero h1 span {
+            color: var(--primary);
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #666;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        /* Features Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .features {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        
+        /* Wallet Section */
+        .wallet-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+        
+        .wallet-content {
+            display: flex;
+            align-items: center;
+        }
+        
+        .wallet-text {
+            flex: 1;
+            padding-right: 50px;
+        }
+        
+        .wallet-visual {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .wallet-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            color: var(--dark);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .wallet-balance {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .balance-amount {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .wallet-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .wallet-btn {
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px;
+            background: var(--light);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        /* Business Model Section */
+        .business-model {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .model-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 0 20px;
+            margin-bottom: 30px;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--secondary), #FF8E53);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 18px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin: 20px 0;
+            }
+            
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-content {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .wallet-content {
+                flex-direction: column;
+            }
+            
+            .wallet-text {
+                padding-right: 0;
+                margin-bottom: 40px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">Art<span>Connect</span></div>
+                <ul class="nav-links">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#funcionalidades">Funcionalidades</a></li>
+                    <li><a href="#billetera">Billetera</a></li>
+                    <li><a href="#modelo">Modelo de Negocio</a></li>
+                    <li><a href="#comunidad">Comunidad</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline">Iniciar Sesión</button>
+                    <button class="btn btn-primary">Registrarse</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Conecta, Crea y <span>Prospera</span> Junto a Otros Creadores</h1>
+                <p>Una red social diseñada específicamente para emprendedores y artistas de la economía naranja, con herramientas financieras integradas y un modelo de ayuda mutua igualitaria.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary">Comenzar Ahora</button>
+                    <button class="btn btn-outline">Ver Demo</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <!-- Placeholder for hero image -->
+                <div style="width: 100%; height: 400px; background: linear-gradient(135deg, #6C63FF, #36D1DC); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">
+                    Plataforma de Colaboración
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="funcionalidades">
+        <div class="container">
+            <div class="section-title">
+                <h2>Funcionalidades Principales</h2>
+                <p>Descubre todas las herramientas que ponemos a tu disposición para impulsar tu creatividad y negocio</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Red de Contactos</h3>
+                    <p>Conecta con otros creadores, artistas y emprendedores de la economía naranja. Encuentra colaboradores para tus proyectos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <h3>Portafolio Digital</h3>
+                    <p>Muestra tu trabajo en un portafolio profesional integrado. Comparte tus proyectos y recibe feedback de la comunidad.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Billetera Digital</h3>
+                    <p>Gestiona tus ingresos, realiza pagos y recibe fondos de manera segura. Conectada a sistemas de pago tradicionales y cripto.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Sistema de Ayuda Mutua</h3>
+                    <p>Participa en rondas de financiamiento colectivo donde todos contribuyen y todos reciben apoyo para sus proyectos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Mercado Creativo</h3>
+                    <p>Vende tus obras, servicios creativos o productos digitales directamente en la plataforma con comisiones mínimas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎓</div>
+                    <h3>Cursos y Mentorías</h3>
+                    <p>Accede a formación especializada y conecta con mentores que te ayudarán a desarrollar tu potencial creativo y empresarial.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wallet Section -->
+    <section class="wallet-section" id="billetera">
+        <div class="container">
+            <div class="wallet-content">
+                <div class="wallet-text">
+                    <h2>Billetera Digital Integrada</h2>
+                    <p>Gestiona tus finanzas creativas de manera segura y sencilla. Nuestra billetera digital te permite:</p>
+                    <ul style="margin: 20px 0; padding-left: 20px;">
+                        <li>Recibir pagos por tus trabajos y proyectos</li>
+                        <li>Participar en el sistema de ayuda mutua</li>
+                        <li>Realizar transferencias a otros creadores</li>
+                        <li>Convertir entre monedas tradicionales y digitales</li>
+                        <li>Acceder a microcréditos para tus proyectos</li>
+                    </ul>
+                    <button class="btn btn-primary">Conoce la Billetera</button>
+                </div>
+                <div class="wallet-visual">
+                    <div class="wallet-card">
+                        <div class="wallet-balance">
+                            <p>Saldo Disponible</p>
+                            <div class="balance-amount">$1,250.00</div>
+                            <p>ArtConnect Coins: 125 ATC</p>
+                        </div>
+                        <div class="wallet-actions">
+                            <button class="wallet-btn">Enviar</button>
+                            <button class="wallet-btn">Recibir</button>
+                            <button class="wallet-btn">Canjear</button>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <h4>Actividad Reciente</h4>
+                            <div style="margin-top: 15px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                    <span>Venta de ilustración</span>
+                                    <span style="color: var(--success);">+ $150.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                    <span>Ronda de ayuda mutua</span>
+                                    <span style="color: var(--success);">+ $500.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span>Pago a colaborador</span>
+                                    <span style="color: var(--secondary);">- $75.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Model Section -->
+    <section class="business-model" id="modelo">
+        <div class="container">
+            <div class="section-title">
+                <h2>Modelo de Ayuda y Ganancia Mutua Igualitaria</h2>
+                <p>Un sistema revolucionario donde todos contribuyen y todos se benefician por igual</p>
+            </div>
+            <div class="model-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Registro y Verificación</h3>
+                    <p>Los creadores se registran y verifican su perfil, demostrando su trabajo en la economía naranja.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Contribución Mensual</h3>
+                    <p>Cada miembro contribuye con una cuota mensual accesible que se destina al fondo común.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Rondas de Financiamiento</h3>
+                    <p>Periódicamente, los fondos se distribuyen equitativamente entre un grupo de proyectos seleccionados.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Selección Democrática</h3>
+                    <p>La comunidad vota para decidir qué proyectos reciben financiamiento en cada ronda.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h3>Retorno de Inversión</h3>
+                    <p>Cuando los proyectos financiados generan ganancias, una parte retorna al fondo común para financiar a otros.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 50px;">
+                <button class="btn btn-primary">Ver Ejemplo de Ronda</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Únete a la Revolución de la Economía Naranja</h2>
+            <p>Forma parte de una comunidad donde el talento y la creatividad son valorados y recompensados justamente.</p>
+            <button class="btn btn-primary" style="background: white; color: var(--secondary);">Crear Mi Cuenta Gratis</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ArtConnect</h3>
+                    <p>La red social para creadores de la economía naranja con herramientas financieras integradas y un modelo de ayuda mutua.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#funcionalidades">Funcionalidades</a></li>
+                        <li><a href="#billetera">Billetera</a></li>
+                        <li><a href="#modelo">Modelo de Negocio</a></li>
+                        <li><a href="#comunidad">Comunidad</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Términos y Condiciones</a></li>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Política de Cookies</a></li>
+                        <li><a href="#">Información Legal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:info@artconnect.com">info@artconnect.com</a></li>
+                        <li><a href="#">Soporte Técnico</a></li>
+                        <li><a href="#">Prensa</a></li>
+                        <li><a href="#">Trabaja con Nosotros</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 ArtConnect. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for demo purposes
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Wallet balance animation (demo)
+        const balanceElement = document.querySelector('.balance-amount');
+        if(balanceElement) {
+            let balance = 0;
+            const targetBalance = 1250;
+            const increment = targetBalance / 50;
+            
+            const updateBalance = () => {
+                if(balance < targetBalance) {
+                    balance += increment;
+                    balanceElement.textContent = '$' + Math.round(balance).toLocaleString();
+                    setTimeout(updateBalance, 30);
+                } else {
+                    balanceElement.textContent = '$' + targetBalance.toLocaleString();
+                }
+            };
+            
+            // Start animation when wallet section is in view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        updateBalance();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            observer.observe(document.querySelector('.wallet-section'));
+        }
+    </script>
+</body>
+</html>
